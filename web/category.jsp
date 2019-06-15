@@ -15,6 +15,8 @@
     String categoryId = request.getParameter("id");
     CategoryModel catModel = new CategoryModel();
     Category cat = catModel.getCategoryById(categoryId);
+    if(cat != null) {
+       
 %>
 <% request.setAttribute("pagetitle", cat.getName() + " Courses"); %>
 <jsp:include page="template/header.jsp"></jsp:include>
@@ -35,11 +37,15 @@
                 for (Course c : courses) {
                     UserModel uModel = new UserModel();
                     User u = uModel.getUser(new Pair<String,String>("userid",String.valueOf(c.getCreatedby())));
+                    if(u != null) {
                     out.print(c.getItemHtml(u.getUsername(), "1"));
+                    }
                 }
             %>
         </div>
     </div>
 </section> <!-- /courses -->
-
+<% } else {%>
+<p>No Category Found</p>
+<% } %>
 <jsp:include page="template/footer.jsp"></jsp:include>

@@ -30,7 +30,7 @@
         response.sendRedirect("/eMentor/");
         return;
         // user not found
-    }
+    }   
 
     if (publicUser != null) {
         request.setAttribute("pagetitle", publicUser.getFname() + "'s Profile");
@@ -67,7 +67,6 @@
                     <li class="list-inline-item"><a href="/eMentor/profile.jsp?action=courses&id=<%= publicUser != null ? +publicUser.getUserid() : loggedIn.getUserid()%>" class="btn btn-default btn-block">View <%=(publicUser != null ? publicUser.getFname() + "'s" : "My")%> Courses</a></li>
                 </ul>
             </div>
-
             <div class="col-md-9">
 
                 <% if (loggedIn != null && action.equals("edit")) {%>

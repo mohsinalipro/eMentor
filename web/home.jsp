@@ -46,6 +46,7 @@
     <!--Feature-->
    <section id="feature" class="section-padding">
     <div class="container">
+        <a href="home.jsp"></a>
       <div class="row">
         <div class="header-section text-center">
           <h2>Features</h2>
@@ -118,10 +119,12 @@
             <%
 
                 ArrayList<Course> courses = Models.courseModel.getAllCourses();
+                
                 for (Course c : courses) {
  
                     User u = Models.userModel.getUser(new Pair<String, String>("userid", String.valueOf(c.getCreatedby())));
                     double courseRating = Models.reviewModel.getCourseRating(c.getCourseid());
+                    if(u != null)
                     out.print(c.getItemHtml(u.getUsername(), String.valueOf(courseRating)));
                 }
 
