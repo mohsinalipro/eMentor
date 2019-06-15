@@ -1,0 +1,92 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import entity.User;
+import database.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ *
+ * @author Mohsin Ali
+ */
+public class UserModel extends Database {
+
+    public int isValidLogin(String username, String password) {
+        int userid = -1;
+        String query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+        try {
+            ResultSet rs = querySQL(query);
+            if (rs.first()) {
+                userid = rs.getInt("userid");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+
+        }
+
+        return userid;
+    }
+
+    public User getUserByUsername(String username) {
+        User u = null;
+        String query = "SELECT * FROM users WHERE username = '" + username + "' LIMIT 1";
+        try {
+            ResultSet rs = querySQL(query);
+            if (rs.first()) {
+                u = new User(
+                       rs.getInt("userid"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("fname"),
+                        rs.getString("lname"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        rs.getInt("usertype"),
+                        rs.getTimestamp("registration_date").toString(),
+                        rs.getString("profileimage")
+                );
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return u;
+    }
+    public User getUserByUserId(int userId) {
+        User u = null;
+        String query = "SELECT * FROM users WHERE userid = '" + userId + "' LIMIT 1";
+        try {
+            ResultSet rs = querySQL(query);
+            if (rs.first()) {
+                u = new User(
+                       rs.getInt("userid"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("fname"),
+                        rs.getString("lname"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        rs.getInt("usertype"),
+                        rs.getTimestamp("registration_date").toString(),
+                        rs.getString("profileimage")
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return u;
+    }
+}
